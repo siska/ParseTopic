@@ -70,7 +70,7 @@
         cell.detailTextLabel.text = @(number).stringValue;
     }];
     cell.textLabel.text = person.name;
-    
+
     return cell;
 }
 

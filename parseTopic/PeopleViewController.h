@@ -40,6 +40,10 @@ step 1
  
  *** an important thing Max said - within this example, there will be a slight delay when a user tries to add a dog before it comes back from parse - what Max said was a workaround but tougher and more buggy if not done right is to save the dogs as an array too - show from the array immediately because it should be the same as what's on parse - then you pull or check from parse to make sure they're the same - gives the impression to the user that it worked correctly
  
+ step 6
+ - we just updated on PeopleVC.m the cellForRowAt... - did a new query to get the dogs back for the owner and then displayed the count within the detail portion
+ - *** - an important thing to note was that we used the countObjectsInBackgroundWithBlock - another way would have been just to use countObjects .count or something to get back the count, but then we're going through every single dog and counting them up - with a lot of dogs, this would really slow down the app - instead we use the countObjectsInBackground... which is more convenient and less process heavy
+ - another important thing to note is that we'll get the issue here with tableViews where the count will be assigned to the wrong person if someone scrolls to fast - within the kitten hackwich, we implemented a fix
  
  
  
