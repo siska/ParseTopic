@@ -9,6 +9,8 @@
 #import "PeopleViewController.h"
 #import <Parse/Parse.h>
 #import "DogViewController.h"
+#import "Person.h" //step 3
+#import "Dog.h"
 
 @interface PeopleViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -25,8 +27,15 @@
 }
 - (void)addPersonWithName:(NSString *)name andAge:(NSNumber *)age
 {
-
+    Person *person = [Person object];
+    person.name = name;
+    person.age = age;
+    [person saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [self refreshDisplay]; //refreshDisplay is the method we created to get all the parse data again and reload with all
+        //would usually do the if to see if error
+    }];
 }
+
 - (IBAction)onAddPersonButtonTapped:(id)sender {
 
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"New Owner" message:nil preferredStyle:UIAlertControllerStyleAlert];
@@ -53,12 +62,31 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PersonCell"];
+    Person *person = [self.persons objectAtIndex:indexPath.row];
+    PFQuery *dogsQuery = [Dog query];
+    [dogsQuery whereKey:@"owner" equalTo:person];
 
+    [dogsQuery countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
+        cell.detailTextLabel.text = @(number).stringValue;
+    }];
+    cell.textLabel.text = person.name;
+    
     return cell;
 }
 
-- (void) refreshDisplay
+- (void) refreshDisplay //3 - filled in
 {
+    PFQuery *personQuery = [PFQuery queryWithClassName:[Person parseClassName]];
+    [personQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (error) {
+            NSLog(@"Error: %@", error);
+        }
+        else
+        {
+            self.persons = objects;
+            [self.tableView reloadData];
+        }
+    }];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

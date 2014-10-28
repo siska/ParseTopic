@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		126E7B9219FFE9D9003BA9D2 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 126E7B9119FFE9D9003BA9D2 /* Person.m */; };
+		126E7B9519FFED11003BA9D2 /* Dog.m in Sources */ = {isa = PBXBuildFile; fileRef = 126E7B9419FFED11003BA9D2 /* Dog.m */; };
 		193EFE9A19F8868000EF090A /* DogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 193EFE9919F8868000EF090A /* DogViewController.m */; };
 		19AFF66219A2220400A96D5C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 19AFF66119A2220400A96D5C /* main.m */; };
 		19AFF66519A2220400A96D5C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 19AFF66419A2220400A96D5C /* AppDelegate.m */; };
@@ -30,6 +32,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		126E7B9019FFE9D9003BA9D2 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Person.h; path = ../Person.h; sourceTree = "<group>"; };
+		126E7B9119FFE9D9003BA9D2 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Person.m; path = ../Person.m; sourceTree = "<group>"; };
+		126E7B9319FFED11003BA9D2 /* Dog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dog.h; sourceTree = "<group>"; };
+		126E7B9419FFED11003BA9D2 /* Dog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dog.m; sourceTree = "<group>"; };
 		193EFE9819F8868000EF090A /* DogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogViewController.h; sourceTree = "<group>"; };
 		193EFE9919F8868000EF090A /* DogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogViewController.m; sourceTree = "<group>"; };
 		19AFF65C19A2220400A96D5C /* parseTopicStudentVersion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = parseTopicStudentVersion.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -117,6 +123,10 @@
 				19AFF66719A2220400A96D5C /* PeopleViewController.m */,
 				193EFE9819F8868000EF090A /* DogViewController.h */,
 				193EFE9919F8868000EF090A /* DogViewController.m */,
+				126E7B9019FFE9D9003BA9D2 /* Person.h */,
+				126E7B9119FFE9D9003BA9D2 /* Person.m */,
+				126E7B9319FFED11003BA9D2 /* Dog.h */,
+				126E7B9419FFED11003BA9D2 /* Dog.m */,
 				190D1AF519A7981C00D491B9 /* Data Model */,
 				19AFF66919A2220400A96D5C /* Main.storyboard */,
 				19AFF66C19A2220400A96D5C /* Images.xcassets */,
@@ -234,8 +244,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				126E7B9519FFED11003BA9D2 /* Dog.m in Sources */,
 				19AFF66819A2220400A96D5C /* PeopleViewController.m in Sources */,
 				19AFF66519A2220400A96D5C /* AppDelegate.m in Sources */,
+				126E7B9219FFE9D9003BA9D2 /* Person.m in Sources */,
 				193EFE9A19F8868000EF090A /* DogViewController.m in Sources */,
 				19AFF66219A2220400A96D5C /* main.m in Sources */,
 			);

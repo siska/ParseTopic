@@ -7,6 +7,7 @@
 //
 
 #import "DogViewController.h"
+#import "Dog.h" //step 5
 
 @interface DogViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -19,7 +20,12 @@
 
 - (void)addDogWithName:(NSString *)name
 {
-
+    Dog *dog = [Dog object];
+    dog.name = name;
+    dog.owner = self.person;
+    [dog saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        [self refreshDisplay];
+    }];
 }
 
 - (IBAction)addDogTapped:(id)sender {
@@ -41,7 +47,12 @@
 
 - (void) refreshDisplay
 {
-
+    PFQuery *queryForDogs = [Dog query]; //use query like we could object with Person - easier and safer
+    [queryForDogs whereKey:@"owner" equalTo:self.person]; //could use self.person because it was passed over in segue
+    [queryForDogs findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        self.dogs = objects;
+        [self.tableView reloadData];
+    }];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -52,6 +63,8 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    Dog *dog = [self.dogs objectAtIndex:indexPath.row];
+    cell.textLabel.text = dog.name;
     return cell;
 }
 
