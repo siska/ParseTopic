@@ -18,7 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-    [Parse  setApplicationId:@"n4MPZopmrIV0J4panB7P2GDzhz5kqFvGHUYG03da" clientKey:@"3xGKStx5IqUNFoD1NwOesW6KqlEtJw1lXbI0jbe3"];
+    [Parse  setApplicationId:@"" clientKey:@""];
 
     
     return YES;

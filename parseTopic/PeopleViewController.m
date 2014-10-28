@@ -8,6 +8,7 @@
 
 #import "PeopleViewController.h"
 #import <Parse/Parse.h>
+#import "DogViewController.h"
 
 @interface PeopleViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -22,87 +23,53 @@
 {
     return self.persons.count;
 }
-- (IBAction)addButtonTapped:(id)sender {
-    
-    PFObject *person = [PFObject objectWithClassName:@"Person"];
-    person[@"name"] = @"Kevin McQuown";
-    person[@"age"] = @52;
-    [person saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (error) {
-            NSLog(@"%@",[error userInfo]);
-        }
-        else
-        {
-            [self refreshDisplay];
-        }
+- (void)addPersonWithName:(NSString *)name andAge:(NSNumber *)age
+{
+
+}
+- (IBAction)onAddPersonButtonTapped:(id)sender {
+
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"New Owner" message:nil preferredStyle:UIAlertControllerStyleAlert];
+
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"Name";
     }];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = @"Age";
+    }];
+
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"Add" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self addPersonWithName:[alert.textFields[0] text] andAge:[NSNumber numberWithInteger:[[alert.textFields[1] text] intValue]]];
+    }];
+
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:cancelAction];
+    [alert addAction:okAction];
+
+    [self presentViewController:alert animated:YES completion:nil];
+
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PersonCell"];
-    PFObject *person = self.persons[indexPath.row];
-    cell.textLabel.text = person[@"name"];
+
     return cell;
-}
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    PFObject *person = self.persons[indexPath.row];
-
-    PFObject *dog = [PFObject objectWithClassName:@"Dog"];
-    dog[@"name"] = @"Fido";
-    dog[@"owner"] = person;
-    [dog saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        [self refreshDisplay];
-    }];
-}
-
--(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
-{
-    PFObject *person = self.persons[indexPath.row];
-
-    PFQuery *query = [PFQuery queryWithClassName:@"Dog"];
-    [query whereKey:@"owner" equalTo:person];
-
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        for (PFObject *dog in objects)
-        {
-            NSLog(@"%@",dog);
-        }
-    }];
 }
 
 - (void) refreshDisplay
 {
-    PFQuery *personQuery = [PFQuery queryWithClassName:@"Person"];
-    [personQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (error)
-        {
-
-        }
-        else
-        {
-            self.persons = objects;
-            [self.tableView reloadData];
-        }
-    }];
 }
-- (void)viewWillAppear:(BOOL)animated
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
+    DogViewController *vc = segue.destinationViewController;
+    vc.person = self.persons[self.tableView.indexPathForSelectedRow.row];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
-
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
     [self refreshDisplay];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 @end
